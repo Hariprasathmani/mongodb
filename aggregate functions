@@ -1,0 +1,140 @@
+mydatabase> db.orders.aggregate([
+...     {
+...         $lookup: {
+...             from: "users",      // Collection to join
+...             localField: "u_id",  // Field in "orders"
+...             foreignField: "u_id", // Field in "users"
+...             as: "user_info"      // Output field name
+...         }
+...     },
+...     { $unwind: "$user_info" }, // Flatten the joined user data
+...     {
+...         $project: {
+...             _id: 1,
+...             "user_info.name": 1,
+...             p_id: 1,
+...             qty: 1,
+...             status: 1
+...         }
+...     }
+... ]);
+...
+[
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1417'),
+    p_id: 1,
+    qty: 1,
+    status: 'Pending',
+    user_info: { name: 'Sneha Reddy' }
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1418'),
+    p_id: 5,
+    qty: 1,
+    status: 'Delivered',
+    user_info: { name: 'Ravi Kumar' }
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1419'),
+    p_id: 2,
+    qty: 3,
+    status: 'Processing',
+    user_info: { name: 'Meera Joshi' }
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b141a'),
+    p_id: 4,
+    qty: 1,
+    status: 'Cancelled',
+    user_info: { name: 'Vikram Singh' }
+  }
+]
+mydatabase> db.orders.aggregate([
+...     {
+...         $group: {
+...             _id: "$u_id",        // Group by u_id (user ID)
+...             totalOrders: { $sum: 1 } // Count total orders per user
+...         }
+...     }
+... ]);
+...
+[
+  { _id: 4, totalOrders: 1 },
+  { _id: 2, totalOrders: 1 },
+  { _id: 3, totalOrders: 1 },
+  { _id: 5, totalOrders: 1 }
+]
+mydatabase> db.orders.aggregate([
+...     { $sort: { qty: -1 } } // -1 for descending order
+... ]);
+...
+[
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1419'),
+    o_id: 4,
+    u_id: 4,
+    p_id: 2,
+    qty: 3,
+    status: 'Processing'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1417'),
+    o_id: 2,
+    u_id: 2,
+    p_id: 1,
+    qty: 1,
+    status: 'Pending'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1418'),
+    o_id: 3,
+    u_id: 3,
+    p_id: 5,
+    qty: 1,
+    status: 'Delivered'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b141a'),
+    o_id: 5,
+    u_id: 5,
+    p_id: 4,
+    qty: 1,
+    status: 'Cancelled'
+  }
+]
+mydatabase> db.orders.aggregate([
+...     {
+...         $lookup: {
+...             from: "products",
+...             localField: "p_id",
+...             foreignField: "p_id",
+...             as: "product_details"
+...         }
+...     },
+...     { $unwind: "$product_details" },
+...     {
+...         $group: {
+...             _id: "$p_id",
+...             totalRevenue: { $sum: { $multiply: ["$qty", "$product_details.price"] } }
+...         }
+...     },
+...     { $sort: { totalRevenue: -1 } }  // Sort by highest revenue
+... ]);
+...
+[
+  { _id: 2, totalRevenue: 7500 },
+  { _id: 5, totalRevenue: 7000 },
+  { _id: 4, totalRevenue: 5000 },
+  { _id: 1, totalRevenue: 1200 }
+]
+mydatabase> db.orders.aggregate([
+...     { $match: { status: "Delivered" } }, // Filter only delivered orders
+...     {
+...         $group: {
+...             _id: null,
+...             totalSales: { $sum: "$qty" }
+...         }
+...     }
+... ]);
+...
+[ { _id: null, totalSales: 1 } ]
