@@ -1,0 +1,167 @@
+mydatabase> db.payments.find();
+[
+  {
+    _id: ObjectId('67ee0ee8f0772293496b141b'),
+    id: 1,
+    o_id: 1,
+    amount: 7000,
+    status: 'Completed',
+    method: 'Credit Card'
+  },
+  {
+    _id: ObjectId('67ee0ee8f0772293496b141c'),
+    id: 2,
+    o_id: 2,
+    amount: 1200,
+    status: 'Pending',
+    method: 'UPI'
+  },
+  {
+    _id: ObjectId('67ee0ee8f0772293496b141d'),
+    id: 3,
+    o_id: 3,
+    amount: 7000,
+    status: 'Completed',
+    method: 'Net Banking'
+  },
+  {
+    _id: ObjectId('67ee0ee8f0772293496b141e'),
+    id: 4,
+    o_id: 4,
+    amount: 7500,
+    status: 'Processing',
+    method: 'Debit Card'
+  },
+  {
+    _id: ObjectId('67ee0ee8f0772293496b141f'),
+    id: 5,
+    o_id: 5,
+    amount: 5000,
+    status: 'Refunded',
+    method: 'Wallet'
+  }
+]
+mydatabase> db.users.find();
+[
+  {
+    _id: ObjectId('67ee0765f0772293496b140b'),
+    u_id: 78,
+    name: 'hari',
+    city: 'chennai'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1411'),
+    u_id: 1,
+    name: 'Arjun Sharma',
+    city: 'Delhi'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1412'),
+    u_id: 2,
+    name: 'Sneha Reddy',
+    city: 'Hyderabad'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1413'),
+    u_id: 3,
+    name: 'Ravi Kumar',
+    city: 'Bangalore'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1414'),
+    u_id: 4,
+    name: 'Meera Joshi',
+    city: 'Mumbai'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1415'),
+    u_id: 5,
+    name: 'Vikram Singh',
+    city: 'Chennai'
+  }
+]
+mydatabase> db.products.find();
+[
+  {
+    _id: ObjectId('67ee0e92f0772293496b140c'),
+    p_id: 1,
+    name: 'Wireless Mouse',
+    price: 1200,
+    category: 'Electronics',
+    stock: 50
+  },
+  {
+    _id: ObjectId('67ee0e92f0772293496b140d'),
+    p_id: 2,
+    name: 'Bluetooth Headphones',
+    price: 2500,
+    category: 'Electronics',
+    stock: 30
+  },
+  {
+    _id: ObjectId('67ee0e92f0772293496b140e'),
+    p_id: 3,
+    name: 'Running Shoes',
+    price: 3500,
+    category: 'Footwear',
+    stock: 20
+  },
+  {
+    _id: ObjectId('67ee0e92f0772293496b140f'),
+    p_id: 4,
+    name: 'Smart Watch',
+    price: 5000,
+    category: 'Wearables',
+    stock: 15
+  },
+  {
+    _id: ObjectId('67ee0e92f0772293496b1410'),
+    p_id: 5,
+    name: 'Office Chair',
+    price: 7000,
+    category: 'Furniture',
+    stock: 10
+  }
+]
+mydatabase> db.orders.find();
+[
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1416'),
+    o_id: 1,
+    u_id: 1,
+    p_id: 3,
+    qty: 2,
+    status: 'Shipped'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1417'),
+    o_id: 2,
+    u_id: 2,
+    p_id: 1,
+    qty: 1,
+    status: 'Pending'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1418'),
+    o_id: 3,
+    u_id: 3,
+    p_id: 5,
+    qty: 1,
+    status: 'Delivered'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1419'),
+    o_id: 4,
+    u_id: 4,
+    p_id: 2,
+    qty: 3,
+    status: 'Processing'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b141a'),
+    o_id: 5,
+    u_id: 5,
+    p_id: 4,
+    qty: 1,
+    status: 'Cancelled'
+  }]
