@@ -1,0 +1,289 @@
+mydatabase> db.orders.find({ u_id: 1 })
+[
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1416'),
+    o_id: 1,
+    u_id: 1,
+    p_id: 3,
+    qty: 2,
+    status: 'Shipped'
+  }
+]
+mydatabase> db.payments.find({ o_id: 1001 })
+
+mydatabase> db.payments.find({ o_id: 1 })
+[
+  {
+    _id: ObjectId('67ee0ee8f0772293496b141b'),
+    id: 1,
+    o_id: 1,
+    amount: 7000,
+    status: 'Completed',
+    method: 'Credit Card'
+  }
+]
+mydatabase> db.users.find({ name:"hari" })
+[
+  {
+    _id: ObjectId('67ee0765f0772293496b140b'),
+    u_id: 78,
+    name: 'hari',
+    city: 'chennai'
+  }
+]
+mydatabase> db.orders.updateOne({ o_id: 1 }, { $set: { status: "Delivered" } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mydatabase>  db.orders.find({ o_id: 1 })
+[
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1416'),
+    o_id: 1,
+    u_id: 1,
+    p_id: 3,
+    qty: 2,
+    status: 'Delivered'
+  }
+]
+mydatabase> db.products.updateOne({ p_id: 1 }, { $inc: { stock: -1 } })
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mydatabase>  db.products.find({ p_id: 1 })
+[
+  {
+    _id: ObjectId('67ee0e92f0772293496b140c'),
+    p_id: 1,
+    name: 'Wireless Mouse',
+    price: 1200,
+    category: 'Electronics',
+    stock: 49
+  }
+]
+mydatabase> db.products.updateOne({ p_id: 1 }, { $inc: { stock: "-1"} })
+MongoServerError: Cannot increment with non-numeric argument: {stock: "-1"}
+mydatabase> db.orders.deleteOne({ _id: 1 })
+{ acknowledged: true, deletedCount: 0 }
+mydatabase> db.orders.find();
+[
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1416'),
+    o_id: 1,
+    u_id: 1,
+    p_id: 3,
+    qty: 2,
+    status: 'Delivered'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1417'),
+    o_id: 2,
+    u_id: 2,
+    p_id: 1,
+    qty: 1,
+    status: 'Pending'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1418'),
+    o_id: 3,
+    u_id: 3,
+    p_id: 5,
+    qty: 1,
+    status: 'Delivered'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1419'),
+    o_id: 4,
+    u_id: 4,
+    p_id: 2,
+    qty: 3,
+    status: 'Processing'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b141a'),
+    o_id: 5,
+    u_id: 5,
+    p_id: 4,
+    qty: 1,
+    status: 'Cancelled'
+  }
+]
+mydatabase> db.orders.deleteOne({ u_id: 1 })
+{ acknowledged: true, deletedCount: 1 }
+mydatabase> db.orders.find();
+[
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1417'),
+    o_id: 2,
+    u_id: 2,
+    p_id: 1,
+    qty: 1,
+    status: 'Pending'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1418'),
+    o_id: 3,
+    u_id: 3,
+    p_id: 5,
+    qty: 1,
+    status: 'Delivered'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1419'),
+    o_id: 4,
+    u_id: 4,
+    p_id: 2,
+    qty: 3,
+    status: 'Processing'
+  },
+  {
+    _id: ObjectId('67ee0ec9f0772293496b141a'),
+    o_id: 5,
+    u_id: 5,
+    p_id: 4,
+    qty: 1,
+    status: 'Cancelled'
+  }
+]
+mydatabase> db.orders.find({ status: "Pending" })
+[
+  {
+    _id: ObjectId('67ee0ec9f0772293496b1417'),
+    o_id: 2,
+    u_id: 2,
+    p_id: 1,
+    qty: 1,
+    status: 'Pending'
+  }
+]
+mydatabase> db.products.find({ price: { $gt: 600 } })
+[
+  {
+    _id: ObjectId('67ee0e92f0772293496b140c'),
+    p_id: 1,
+    name: 'Wireless Mouse',
+    price: 1200,
+    category: 'Electronics',
+    stock: 49
+  },
+  {
+    _id: ObjectId('67ee0e92f0772293496b140d'),
+    p_id: 2,
+    name: 'Bluetooth Headphones',
+    price: 2500,
+    category: 'Electronics',
+    stock: 30
+  },
+  {
+    _id: ObjectId('67ee0e92f0772293496b140e'),
+    p_id: 3,
+    name: 'Running Shoes',
+    price: 3500,
+    category: 'Footwear',
+    stock: 20
+  },
+  {
+    _id: ObjectId('67ee0e92f0772293496b140f'),
+    p_id: 4,
+    name: 'Smart Watch',
+    price: 5000,
+    category: 'Wearables',
+    stock: 15
+  },
+  {
+    _id: ObjectId('67ee0e92f0772293496b1410'),
+    p_id: 5,
+    name: 'Office Chair',
+    price: 7000,
+    category: 'Furniture',
+    stock: 10
+  }
+]
+mydatabase> db.users.find({ name: /^A/ })
+[
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1411'),
+    u_id: 1,
+    name: 'Arjun Sharma',
+    city: 'Delhi'
+  }
+]
+mydatabase> db.users.find({ name: /^S/ })
+[
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1412'),
+    u_id: 2,
+    name: 'Sneha Reddy',
+    city: 'Hyderabad'
+  }
+]
+mydatabase> db.Users.find()
+
+mydatabase> db.users.find()
+[
+  {
+    _id: ObjectId('67ee0765f0772293496b140b'),
+    u_id: 78,
+    name: 'hari',
+    city: 'chennai'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1411'),
+    u_id: 1,
+    name: 'Arjun Sharma',
+    city: 'Delhi'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1412'),
+    u_id: 2,
+    name: 'Sneha Reddy',
+    city: 'Hyderabad'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1413'),
+    u_id: 3,
+    name: 'Ravi Kumar',
+    city: 'Bangalore'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1414'),
+    u_id: 4,
+    name: 'Meera Joshi',
+    city: 'Mumbai'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1415'),
+    u_id: 5,
+    name: 'Vikram Singh',
+    city: 'Chennai'
+  }
+]
+mydatabase> db.users.find({ name: /S/ })
+[
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1411'),
+    u_id: 1,
+    name: 'Arjun Sharma',
+    city: 'Delhi'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1412'),
+    u_id: 2,
+    name: 'Sneha Reddy',
+    city: 'Hyderabad'
+  },
+  {
+    _id: ObjectId('67ee0eb4f0772293496b1415'),
+    u_id: 5,
+    name: 'Vikram Singh',
+    city: 'Chennai'
+  }
+]
